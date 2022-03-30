@@ -4,23 +4,21 @@ import { MessageService } from "./messages.service";
 
 @Controller("messages")
 export class MessagesController {
-    messagesService: MessageService;
-
-    constructor(private messageService: MessageService) {}
+    constructor(public messageService: MessageService) {}
 
     @Get()
     listMessages() {
-        return this.messagesService.findAll();
+        return this.messageService.findAll();
     }
 
     @Post()
     createMessage(@Body() body: CreateMessageDto) {
-        return this.messagesService.create(body.content);
+        return this.messageService.create(body.content);
     }
 
     @Get("/:id")
     async getMessage(@Param("id") id: string) {
-        const message = await this.messagesService.findOne(id);
+        const message = await this.messageService.findOne(id);
 
         if (!message) {
             throw new NotFoundException("message not found");
